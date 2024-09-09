@@ -1,0 +1,35 @@
+{
+	"name": "wp-data-test",
+	"version": "0.1.0",
+	"description": "Example block scaffolded with Create Block tool.",
+	"author": "The WordPress Contributors",
+	"license": "GPL-2.0-or-later",
+	"main": "build/index.js",
+	"scripts": {
+		"build": "wp-scripts build --progress",
+		"check-engines": "wp-scripts check-engines",
+		"check-licenses": "wp-scripts check-licenses",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"lint:md:docs": "wp-scripts lint-md-docs",
+		"lint:md:js": "wp-scripts lint-md-js",
+		"lint:pkg-json": "wp-scripts lint-pkg-json",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip",
+		"start": "wp-scripts start --progress",
+		"start:hot": "wp-scripts start --hot --progress",
+		"test:e2e": "wp-scripts test-e2e",
+		"test:unit": "wp-scripts test-unit-js"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^27.9.0"
+	},
+	"dependencies": {
+		"@wordpress/api-fetch": "^7.5.0",
+		"@wordpress/components": "^28.6.0",
+		"@wordpress/data": "^10.5.0",
+		"@wordpress/plugins": "^7.6.0",
+		"aun-pack": "file:../aun-pack"
+	}
+}
