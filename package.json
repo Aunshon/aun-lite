@@ -30,6 +30,7 @@
 		"@wordpress/components": "^28.6.0",
 		"@wordpress/data": "^10.5.0",
 		"@wordpress/plugins": "^7.6.0",
-		"aun-pack": "file:../aun-pack"
+		"aun-pack": "file:../aun-pack",
+		"react-router-dom": "5.3.4"
 	}
 }

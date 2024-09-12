@@ -1,6 +1,42 @@
-import { SAVE_CONTACT, SET_FORM_DATA, SET_LOADING, SET_USERS, FETCH_FROM_API, RESET_FORM_DATA } from "./constants";
+import {
+	SAVE_CONTACT,
+	SET_FORM_DATA,
+	SET_LOADING,
+	SET_USERS,
+	FETCH_FROM_API,
+	RESET_FORM_DATA,
+	SET_EXTENTIONS_DATA,
+	SET_EXTENTION_DATA, SET_FORM_EXTENTIONS_DATA
+} from "./constants";
 
 const actions = {
+	setExtensions( extentions ) {
+		return {
+			type: SET_EXTENTIONS_DATA,
+			payload: extentions
+		};
+	},
+
+	setExtension( namespace, data ) {
+		return {
+			type: SET_EXTENTION_DATA,
+			payload: {
+				namespace,
+				data
+			}
+		};
+	},
+
+	setFormExtensionData( namespace, data ) {
+		return {
+			type: SET_FORM_EXTENTIONS_DATA,
+			payload: {
+				namespace,
+				data
+			}
+		};
+	},
+
 	setUsers( users ) {
 		return {
 			type: SET_USERS,
@@ -52,7 +88,8 @@ const actions = {
         yield actions.setLoading(true);
         const users = yield actions.fetchFromAPI( path );
         yield actions.setUsers( users );
-		yield actions.resetFormData();
+        yield actions.setExtensions( users.extentions );
+				yield actions.resetFormData();
         yield actions.setLoading(false);
 	},
 

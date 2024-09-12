@@ -43,7 +43,10 @@ function demo_sites_enqueue_scripts_styles()
 		// 	array(),
 		// 	$assets['version']
 		// );
+
 	}
+
+	do_action( 'demo_sites_enqueue_scripts_styles' );
 }
 add_action('admin_enqueue_scripts', 'demo_sites_enqueue_scripts_styles');
 

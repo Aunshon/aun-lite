@@ -2,7 +2,7 @@ import { SlotFillProvider, TextControl, Button } from '@wordpress/components';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 import { PluginArea } from '@wordpress/plugins';
-import {AunContactField} from 'aun-pack'
+import {AunContactField, AunDisplayContact} from 'aun-pack'
 import store from '../aun-data/store';
 
 function App() {
@@ -19,7 +19,14 @@ function App() {
 	);
 
 	const formData = useSelect(
-		select => select( store ).getFormData(),
+		select => {
+			const formData = select(store).getFormData();
+			const formExtentionData = select(store).getFormExtension();
+			return {
+				...formData,
+				extentions: formExtentionData
+			}
+		},
 		[]
 	);
 
@@ -31,16 +38,22 @@ function App() {
 
 	return (
 		<SlotFillProvider>
-			<fieldset>
-				{
-					users.map(user => {
-						return <>
-						<code>{JSON.stringify(user)}</code>
-						<br />
-						</>
-					})
-				}
-			</fieldset>
+			{/*<fieldset>*/}
+			{/*	{*/}
+			{/*		users.map(user => {*/}
+			{/*			return <>*/}
+			{/*			<code>{JSON.stringify(user)}</code>*/}
+			{/*			<br />*/}
+			{/*			</>*/}
+			{/*		})*/}
+			{/*	}*/}
+			{/*</fieldset>*/}
+			<div>
+				<h4><b>Name:</b> { users?.name ?? '' }</h4>
+				<h4><b>Age:</b> { users?.age ?? '' }</h4>
+
+				<AunDisplayContact.Slot/>
+			</div>
 			<hr/>
 			<form action="post" onSubmit={handleSubmit}>
 				<TextControl
@@ -51,6 +64,7 @@ function App() {
 
 				<TextControl
 					label="Age"
+					type="number"
 					value={ formData.age ?? '' }
 					onChange={ ( value ) => setFormData( 'age', value ) }
 				/>

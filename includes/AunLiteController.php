@@ -30,18 +30,22 @@ class AunLiteController extends \WP_REST_Controller {
     public function create_item($request) {
         $name = sanitize_text_field($request['name']);
         $age = intval($request['age']);
+		$extentions = $request['extentions'] ?? [];
 
         $current_data = get_option('aun_lite_data', array());
+		$current_item = apply_filters( 'aun_save_data_before', array('name' => $name, 'age' => $age), $request );
 
-        $current_item = array('name' => $name, 'age' => $age);
-        $current_item = apply_filters( 'aun_save_data_before', $current_item, $request );
-
-
-        $current_data[] = $current_item;
+        $current_data = $current_item;
 
         update_option('aun_lite_data', $current_data);
 
-        return new WP_REST_Response(array('message' => 'Data saved successfully', 'data' => $current_data), 200);
+		foreach ( $extentions as $namespace => $extention ) {
+			do_action( 'aun_save_data_after_'. $namespace, $extention );
+		}
+
+	    do_action( 'aun_save_data_after', $request );
+
+	    return new WP_REST_Response(array('message' => 'Data saved successfully', 'data' => $current_data), 200);
     }
 
     public function get_items($request) {
@@ -49,16 +53,17 @@ class AunLiteController extends \WP_REST_Controller {
 
         // Apply filter to the data
         $filtered_data = apply_filters('aun_lite_data_array', $data);
+	    $filtered_data['extentions'] = apply_filters( 'aun_get_item_extention', [] );
 
         return new WP_REST_Response($filtered_data, 200);
     }
 
     public function create_item_permissions_check($request) {
-        return current_user_can('edit_posts');
+        return true;
     }
 
     public function get_items_permissions_check($request) {
-        return current_user_can('read');
+        return true;
     }
 
     public function get_item_schema() {
@@ -78,6 +83,11 @@ class AunLiteController extends \WP_REST_Controller {
                     'description' => esc_html__('Age of the person.', 'your-text-domain'),
                     'type'        => 'integer',
                     'required'    => true,
+                ),
+                'extentions'  => array(
+                    'description' => esc_html__('Extentions', 'your-text-domain'),
+                    'type'        => 'object',
+                    'properties'  => apply_filters( 'aun_schema_extention', [] ),
                 ),
             )
          );
