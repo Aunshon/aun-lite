@@ -1,4 +1,4 @@
-import { SlotFillProvider, TextControl, Button } from '@wordpress/components';
+import { SlotFillProvider, TextControl, Button, Panel } from '@wordpress/components';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
 import { PluginArea } from '@wordpress/plugins';
@@ -37,52 +37,56 @@ function App() {
 	}
 
 	return (
-		<SlotFillProvider>
-			{/*<fieldset>*/}
-			{/*	{*/}
-			{/*		users.map(user => {*/}
-			{/*			return <>*/}
-			{/*			<code>{JSON.stringify(user)}</code>*/}
-			{/*			<br />*/}
-			{/*			</>*/}
-			{/*		})*/}
-			{/*	}*/}
-			{/*</fieldset>*/}
-			<div>
-				<h4><b>Name:</b> { users?.name ?? '' }</h4>
-				<h4><b>Age:</b> { users?.age ?? '' }</h4>
+		<div style={{
+			width: '50vh',
+		}}>
+			<SlotFillProvider>
+				{/*<fieldset>*/}
+				{/*	{*/}
+				{/*		users.map(user => {*/}
+				{/*			return <>*/}
+				{/*			<code>{JSON.stringify(user)}</code>*/}
+				{/*			<br />*/}
+				{/*			</>*/}
+				{/*		})*/}
+				{/*	}*/}
+				{/*</fieldset>*/}
+				<div>
+					<h4><b>Name:</b> { users?.name ?? '' }</h4>
+					<h4><b>Age:</b> { users?.age ?? '' }</h4>
 
-				<AunDisplayContact.Slot/>
-			</div>
-			<hr/>
-			<form action="post" onSubmit={handleSubmit}>
-				<TextControl
-					label="Name"
-					value={ formData.name ?? '' }
-					onChange={ ( value ) => setFormData( 'name', value ) }
-				/>
+					<AunDisplayContact.Slot/>
+				</div>
+				<hr/>
+				<form action="post" onSubmit={handleSubmit}>
+					<TextControl
+						label="Name"
+						value={ formData.name ?? '' }
+						onChange={ ( value ) => setFormData( 'name', value ) }
+					/>
 
-				<TextControl
-					label="Age"
-					type="number"
-					value={ formData.age ?? '' }
-					onChange={ ( value ) => setFormData( 'age', value ) }
-				/>
+					<TextControl
+						label="Age"
+						type="number"
+						value={ formData.age ?? '' }
+						onChange={ ( value ) => setFormData( 'age', value ) }
+					/>
 
 
 
-				<AunContactField.Slot/>
-				<PluginArea/>
+					<AunContactField.Slot/>
+					<PluginArea/>
 
-				<Button
-					text='Save'
-					type='submit'
-					variant='primary'
-					isBusy={loading}
-					disabled={loading}
-				/>
-			</form>
-		</SlotFillProvider>
+					<Button
+						text='Save'
+						type='submit'
+						variant='primary'
+						isBusy={loading}
+						disabled={loading}
+					/>
+				</form>
+			</SlotFillProvider>
+		</div>
 	);
 }
 
